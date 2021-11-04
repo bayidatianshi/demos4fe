@@ -1,0 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --theme_color: skyblue;
+}
+body {
+  display: flex;
+  height: 100vh;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: center;
+}
+.form-container {
+  width: 60vw;
+  height: 60vh;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+.select-container {
+  position: relative;
+  width: 300px;
+}
+.select-title {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  position: relative;
+  cursor: pointer;
+}
+.select-icon {
+  width: 0px;
+  height: 0px;
+  background: none;
+  border: 10px solid #ccc;
+  border-color: #ccc transparent transparent transparent;
+  /* 以上是三角的画法，通过border-color控制三角的方向（上右下左） */
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  transition: all 0.3s;
+}
+.select-icon-up {
+  transform: rotate(180deg);
+  top: 0px;
+}
+.select-ul {
+  display: none;
+  list-style: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 12%);
+  /* 下拉选项需要脱离文档流，然后设置宽度与标题相同，并且通过设置背景色遮盖背面的元素 */
+  position: absolute;
+  top: 34px;
+  background-color: white;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 999;
+}
+.select-li {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+.select-li:hover {
+  background-color: #eee;
+}
+.selected-li {
+  background-color: #eee;
+  color: var(--theme_color);
+}
