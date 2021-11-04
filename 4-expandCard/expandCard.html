@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>扩展卡片</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      width: 90vw;
+    }
+
+    .container>.panel {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      flex: 0.5;
+      padding: 10px;
+      color: #fff;
+      border-radius: 50px;
+      margin: 10px;
+      transition: flex .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      cursor: pointer;
+      height: 90vh;
+    }
+
+    .container>.panel.active {
+      flex: 5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="panel active" style="background-image: url('https://avatars1.githubusercontent.com/u/44018211');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018212');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018213');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018214');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018215');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018216');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018217');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018218');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018219');"></div>
+    <div class="panel" style="background-image: url('https://avatars1.githubusercontent.com/u/44018210');"></div>
+  </div>
+</body>
+<script>
+  const panelItems = document.querySelectorAll(".container > .panel");
+
+  // panelItems.forEach(item => {
+  //   item.addEventListener('click', () => {
+  //     [].filter.call(item.parentElement.children, el => el !== item).forEach(el => el.classList.remove('active'));
+  //     item.classList.add('active')
+  //   });
+  // });
+
+  // 通过事件委托的方式，可以减少事件监听器的绑定
+  const container = document.querySelector('.container');
+  container.addEventListener('click', (e)=> {
+    // 上面用call而不用panelItems，是因为panelItems是NodeList不是数组，所以不能直接用filter，当然可以通过Array.from转化
+    Array.from(panelItems).filter(el => el !== e.target).forEach(el => el.classList.remove('active'));
+    e.target.classList.add('active');
+  })
+</script>
+
+</html>

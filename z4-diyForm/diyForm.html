@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>diyForm</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --theme_color: skyblue;
+      }
+      body {
+        display: flex;
+        height: 100vh;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-content: center;
+      }
+      .form-container {
+        width: 60vw;
+        height: 60vh;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+      }
+      .select-container {
+        position: relative;
+        width: 300px;
+      }
+      .select-title {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 10px;
+        position: relative;
+        cursor: pointer;
+      }
+      .select-icon {
+        width: 0px;
+        height: 0px;
+        background: none;
+        border: 10px solid #ccc;
+        border-color: #ccc transparent transparent transparent;
+        /* 以上是三角的画法，通过border-color控制三角的方向（上右下左） */
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        transition: all 0.3s;
+      }
+      .select-icon-up {
+        transform: rotate(180deg);
+        top: 0px;
+      }
+      .select-ul {
+        display: none;
+        list-style: none;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-shadow: 0 0 4px 1px rgba(0, 0, 0, 12%);
+        /* 下拉选项需要脱离文档流，然后设置宽度与标题相同，并且通过设置背景色遮盖背面的元素 */
+        position: absolute;
+        top: 34px;
+        background-color: white;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 999;
+      }
+      .select-li {
+        height: 30px;
+        line-height: 30px;
+        padding: 0 10px;
+      }
+      .select-li:hover {
+        background-color: #eee;
+      }
+      .selected-li {
+        background-color: #eee;
+        color: var(--theme_color);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="form-item">
+        <div class="select-container">
+          <div class="select-title">
+            <div class="select-content" tabindex="0">请选择</div>
+            <i class="select-icon"></i>
+          </div>
+          <ul class="select-ul">
+            <li class="select-li">选项1</li>
+            <li class="select-li">选项2</li>
+            <li class="select-li">选项3</li>
+            <li class="select-li">选项4</li>
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+
+    <script>
+
+
+      window.onload = function () {
+        // selectOptionData可以从接口获取
+        let selectOptionData = ['选项A', '选项B', '选项C', '选项D'];
+        selectHandle($(".select-container"), selectOptionData);
+      };
+      
+      // 辅助函数
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) => document.querySelectorAll(selector);
+      function handleClass(el) {
+        // 自定函数链式调用，实现el.remove().addClass()的写法
+        let methods = {
+          addClass: (c) => { el.classList.add(c); return methods; },
+          removeClass: (c) => { el.classList.remove(c); return methods; }
+        };
+        return methods;
+      }
+
+      // 功能函数
+      function selectHandle(selectContainer, optData) {
+        // 该下拉框默认为块级元素，可以通过设置display让下拉框变成行内块元素
+        // selectContainer.style.display = 'inline-block';
+
+        // 获取DOM：这种写法要求下拉框元素的相对位置不能乱动
+        let selectTitle = selectContainer.firstElementChild;
+        let selectUl = selectContainer.lastElementChild;
+        let selectContent = selectTitle.firstElementChild;
+        let selectIcon = selectTitle.lastElementChild;
+        // 支持通过数据渲染下拉选项
+        Array.isArray(optData) && optData.length && renderSelectOption(optData);
+        function renderSelectOption(optData) {
+          let lis = '';
+          optData.forEach(text => {
+            lis += `<li class="select-li">${text}</li>`;
+          })
+          selectUl.innerHTML = lis;
+        }
+        // 事件监听：改变class触发视图更新
+        let selectFlag = false;
+        let selectOptionArr = [].slice.call(selectUl.children); // 类数组转数组，也可以用Array.from()
+        let showSelect = (show) => {
+          selectUl.style.display = show ? 'block' : 'none';
+          handleClass(selectIcon)[show ? 'addClass' : 'removeClass']('select-icon-up');
+        }
+        selectTitle.onclick = () => {
+          selectFlag = !selectFlag;
+          showSelect(selectFlag);
+        }
+        selectContent.onblur = () => {
+          // 可以通过设置tabindex属性让div也能触发失焦事件(点击该元素会聚焦，再点击其他元素就失焦)
+          // 由于可能是通过点击下列选项触发的失焦，这时候，失焦先触发>下列框隐藏>下列选项的点击事件无法触发
+          // 所以要把失焦的处理变成异步操作，让下列选项的点击事件先触发
+          setTimeout(() => {
+            selectFlag = false;
+            showSelect(selectFlag);
+          }, 100);
+        }
+        selectOptionArr.forEach((item, index) => {
+          item.onclick = function () {
+            selectFlag = false;
+            selectContent.textContent = item.textContent;
+            selectOptionArr.filter(option => option !== item).forEach(otherItem => {otherItem.classList.remove('selected-li')});
+            item.classList.add("selected-li");
+            showSelect(false);
+          };
+        });
+      }
+    </script>
+  </body>
+</html>

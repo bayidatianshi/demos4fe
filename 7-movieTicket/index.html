@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>选电影座位</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100vh;
+        align-items: center;
+        background-color: #232424;
+        color: #ffffff;
+        font: 16px "微软雅黑";
+      }
+
+      .movie-container {
+        margin: 20px 0;
+      }
+
+      .movie-container label,
+      .movie-container .select-container {
+        vertical-align: middle;
+        display: inline-block;
+      }
+
+      .movie-container label {
+        text-align: right;
+      }
+
+      .select-container {
+        width: 260px;
+        position: relative;
+      }
+
+      .select-container > ul,
+      .select-container > ul li {
+        list-style: none;
+      }
+
+      .select-container > .select-title {
+        position: relative;
+        width: 100%;
+      }
+
+      .select-container > .select-title > .select-content {
+        height: 38px;
+        border: 1px solid #e6e6e6;
+        background-color: #ffffff;
+        border-radius: 2px;
+        cursor: pointer;
+        padding-left: 10px;
+        padding-right: 22px;
+        width: 100%;
+        box-sizing: border-box;
+        line-height: 38px;
+        outline: none;
+        color: #535353;
+      }
+
+      .select-icon {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        width: 0;
+        height: 0;
+        border-width: 6px;
+        border-style: dashed;
+        border-color: transparent;
+        overflow: hidden;
+      }
+
+      .select-container > .select-title > .select-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        cursor: pointer;
+        border-top-color: #c2c2c2;
+        border-top-style: solid;
+        transition: all 0.3s;
+        margin-top: -3px;
+      }
+
+      .select-container > .select-title > .select-up {
+        margin-top: -9px;
+        transform: rotate(180deg);
+      }
+
+      .select-container > .select-items {
+        position: absolute;
+        left: 0;
+        padding: 5px 0;
+        z-index: 899;
+        min-width: 100%;
+        border: 1px solid #d2d2d2;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+        display: none;
+      }
+
+      .select-container > .select-items .select-option {
+        padding: 0 10px;
+        line-height: 36px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        transition: 0.5s all;
+        background-color: #f2f2f2;
+        color: #535353;
+      }
+
+      .select-container > .select-items .search-input {
+        padding: 0 10px;
+        line-height: 36px;
+        outline: none;
+        border: none;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 4px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .select-container > .select-items .select-option:hover {
+        background-color: #5fb878;
+        color: #fff;
+      }
+
+      .select-container > .select-items > .select-this {
+        background-color: #5fb878;
+        color: #fff;
+      }
+
+      .show-case {
+        background-color: rgba(0, 0, 0, 0.12);
+        padding: 7px 12px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-between;
+        color: #fdf2f1;
+      }
+
+      .show-case > .show-case-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px;
+      }
+
+      .seat {
+        width: 25px;
+        height: 22px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: #989796;
+        margin: 3px;
+      }
+
+      .seat.selected {
+        background-color: #bcdbf3;
+      }
+
+      .seat.occupied {
+        background-color: #f2f2f2;
+      }
+
+      .show-case > .show-case-item > i {
+        margin-left: 5px;
+        letter-spacing: 2px;
+      }
+
+      .container {
+        perspective: 1000px;
+        margin-bottom: 30px;
+      }
+
+      .container > .screen {
+        width: 100%;
+        height: 100px;
+        background-color: #ffffff;
+        box-shadow: 0 3px 15px rgba(255, 255, 255, 0.8);
+        transform: rotateX(-45deg);
+        margin: 10px 0;
+      }
+
+      .container .row {
+        display: flex;
+      }
+
+      .container .row .seat:nth-of-type(2) {
+        margin-right: 26px;
+      }
+
+      .container .row .seat:nth-last-of-type(2) {
+        margin-left: 26px;
+      }
+
+      .container .row .seat:not(.occupied):hover {
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+
+      .text {
+        margin: 0.4em;
+        font-size: 16px;
+        letter-spacing: 2px;
+      }
+
+      .text span {
+        color: #e77272;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="movie-container">
+      <label>请选择电影:</label>
+      <div class="select-container">
+        <div class="select-title">
+          <div class="select-content" tabindex="0" hidefocus="true">复仇者联盟4：终局之战 ($10)</div>
+          <i class="select-icon select-down"></i>
+        </div>
+        <ul class="select-items">
+          <div class="select-option" data-value="10">复仇者联盟4：终局之战 ($10)</div>
+          <div class="select-option" data-value="12">小丑 ($12)</div>
+          <div class="select-option" data-value="8">玩具总动员4：($8)</div>
+          <div class="select-option" data-value="9">狮子王 ($9)</div>
+        </ul>
+      </div>
+    </div>
+    <div class="show-case">
+      <div class="show-case-item">
+        <div class="seat"></div>
+        <i>可选座位</i>
+      </div>
+      <div class="show-case-item">
+        <div class="seat selected"></div>
+        <i>选择座位</i>
+      </div>
+      <div class="show-case-item">
+        <div class="seat occupied"></div>
+        <i>已选座位</i>
+      </div>
+    </div>
+    <div class="container">
+      <div class="screen"></div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+    </div>
+    <p class="text">你当前选中了<span id="seat-total-count">0</span>个座位,价格一共为$<span id="seat-total-price">0</span>。</p>
+  </body>
+  <script>
+    /***
+     * 节选自:https://www.eveningwater.com/my-web-projects/
+     * github:https://github.com/eveningwater/my-web-projects/tree/master/js/2
+     * author:eveningwater
+     * date:2020/7
+     */
+    /**
+     *  页面功能
+     */
+    function $(selector) {
+      return document.querySelector(selector);
+    }
+    function $$(selector) {
+      return document.querySelectorAll(selector);
+    }
+    /**
+     * 页面数据
+     */
+    var pageData = getData() || {
+      movieIndex: 0,
+      moviePrice: 10,
+      seatsIndexArr: [],
+    };
+    HTMLElement.prototype.hasClass = function (className) {
+      return new RegExp(" " + className + " ").test(" " + this.className + " ");
+    };
+    /**
+     * 存储数据
+     * @param {*} data
+     */
+    function setData(data) {
+      return localStorage.setItem("pageData", JSON.stringify(data));
+    }
+    /**
+     * 获取数据
+     */
+    function getData() {
+      let data = localStorage.getItem("pageData");
+      if (!data) return;
+      return JSON.parse(data);
+    }
+    /**
+     * 下拉逻辑
+     */
+    function selectHandle(selectContainer) {
+      let selectFlag = false;
+      let showSelect = function (el, bool) {
+        if (bool) {
+          if (el.lastElementChild.hasClass("select-down")) {
+            el.lastElementChild.classList.replace("select-down", "select-up");
+          } else {
+            el.lastElementChild.classList.add("select-up");
+          }
+          el.nextElementSibling.style.display = "block";
+        } else {
+          if (el.lastElementChild.hasClass("select-up")) {
+            el.lastElementChild.classList.replace("select-up", "select-down");
+          } else {
+            el.lastElementChild.classList.add("select-down");
+          }
+          el.nextElementSibling.style.display = "none";
+        }
+      };
+      selectContainer.firstElementChild.onclick = function () {
+        selectFlag = !selectFlag;
+        showSelect(this, selectFlag);
+      };
+      let isBlur = false;
+      let selectOptionArr = [].slice.call(selectContainer.lastElementChild.children);
+      selectOptionArr.forEach((item, index) => {
+        item.onclick = function () {
+          selectFlag = false;
+          isBlur = true;
+          let select_content = this.innerHTML;
+          this.parentElement.previousElementSibling.firstElementChild.innerHTML = select_content;
+          selectOptionArr.map((opt) => {
+            opt.classList.remove("select-this");
+          });
+          this.classList.add("select-this");
+          pageData.movieIndex = index;
+          pageData.moviePrice = Number(this.dataset.value);
+          setValue($(".select-container"), $$(".container .seat"));
+          showSelect(this.parentElement.previousElementSibling, false);
+        };
+      });
+      // 下拉框失去焦点需要隐藏下拉框
+      selectContainer.firstElementChild.firstElementChild.onblur = function () {
+        setTimeout(() => {
+          if (!isBlur) {
+            selectFlag = false;
+            showSelect(this.parentElement, false);
+          } else {
+            isBlur = false;
+          }
+        }, 200);
+      };
+    }
+    /**
+     * 设置默认值
+     * @param {*} selectContainer
+     * @param {*} seats
+     */
+    function setValue(selectContainer, seats) {
+      setData(pageData);
+      selectContainer.firstElementChild.firstElementChild.innerHTML = selectContainer.lastElementChild.children[pageData.movieIndex].innerHTML;
+      computedSeat(pageData.seatsIndexArr, pageData.moviePrice);
+      for (let i = 0; i < pageData.seatsIndexArr.length; i++) {
+        seats[pageData.seatsIndexArr[i]].classList.add("selected");
+      }
+    }
+    /**
+     * 座位逻辑
+     */
+    function seatHandle(seats) {
+      for (let i = 0; i < seats.length; i++) {
+        if (!seats[i].hasClass("occupied")) {
+          seats[i].onclick = function () {
+            this.classList.toggle("selected");
+            let idx = pageData.seatsIndexArr.indexOf(i);
+            if (!this.hasClass("selected") && idx > -1) {
+              pageData.seatsIndexArr.splice(idx, 1);
+            } else if (this.hasClass("selected")) {
+              pageData.seatsIndexArr.push(i);
+            }
+            setValue($(".select-container"), seats);
+          };
+        }
+      }
+    }
+    /**
+     * 计算座位逻辑
+     * @param {*} totalSeats
+     */
+    function computedSeat(totalSeats, curPrice) {
+      $("#seat-total-count").innerHTML = totalSeats.length;
+      $("#seat-total-price").innerHTML = totalSeats.length * curPrice;
+    }
+    window.onload = function () {
+      setValue($(".select-container"), $$(".container .seat"));
+      selectHandle($(".select-container"));
+      seatHandle($$(".container .seat"));
+    };
+  </script>
+</html>

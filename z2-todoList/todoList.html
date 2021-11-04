@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- vue3 -->
+  <script src="https://unpkg.com/vue@3.2.0"></script>
+</head>
+<body>
+  <div id="demo">
+    <h1>{{text}}</h1>
+    <input type="text" v-model="currentInput" @keyup.enter="addList">
+    <ul>
+      <li v-for="(todo, index) in todoList" @click="deleteList(index)">{{todo}}</li>
+    </ul>
+  </div>
+
+  <script>
+    const demo = {
+      data() {
+        return {
+          text: 'Todo List',
+          currentInput: '',
+          todoList: JSON.parse(localStorage.getItem('todoList')) || []
+        }
+      },
+      watch: {
+        // 对于原始类型变量，watch可以直接监听，对于引用类型变量，采用深度监听。
+        todoList: {
+          handler: function (newValue) {
+            localStorage.setItem('todoList', JSON.stringify(newValue));
+          },
+          deep: true,
+          immediate: false, // 组件创建后不需要立刻执行该侦听器
+        }
+      },
+      methods: {
+        addList() {
+          this.todoList.push(this.currentInput);
+          this.currentInput = '';
+        },
+        deleteList(index) {
+          this.todoList.splice(index, 1);
+        }
+      }
+    }
+    Vue.createApp(demo).mount('#demo');
+  </script>
+</body>
+</html>
