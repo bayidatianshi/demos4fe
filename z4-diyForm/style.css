@@ -12,6 +12,21 @@ body {
   justify-content: center;
   align-content: center;
 }
+/* 按钮基础样式 */
+button {
+  outline: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 6px;
+  cursor: pointer;
+  transition: all .1s ease;
+}
+button:hover {
+  transform: scale(1.1);
+}
+
+/* 表单样式 */
 .form-container {
   width: 60vw;
   height: 60vh;
@@ -19,6 +34,10 @@ body {
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
   padding: 20px;
 }
+.form-item {
+  margin-bottom: 20px;
+}
+/* 下拉框样式 */
 .select-container {
   position: relative;
   width: 300px;
@@ -73,4 +92,52 @@ body {
 .selected-li {
   background-color: #eee;
   color: var(--theme_color);
+}
+/* toggle按钮样式 */
+.toggle {
+  width: 30px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 5px;
+  cursor: pointer;
+}
+.toggle-active {
+  background-color: #ccc;
+}
+.toggle-line {
+  display: block;
+  height: 4px;
+  margin: 2px 0;
+  background-color: #aaa;
+}
+
+/* api弹窗组件样式 */
+.ew-popBox-mask .modal-form {
+  width: 350px;
+}
+
+.ew-popBox-mask .modal-form div{
+  margin: 15px 0;
+}
+
+.ew-popBox-mask .modal-form div label {
+  display: block;
+  margin-bottom: 5px;
+  color: #535353;
+}
+
+.ew-popBox-mask .modal-form div input {
+  display: block;
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid #f2f3f4;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #535353;
+}
+
+.ew-popBox-mask .ew-popBox-btnGroup button {
+  letter-spacing: 2px;
 }

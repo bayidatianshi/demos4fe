@@ -1,7 +1,26 @@
+//
 window.onload = function () {
-  // selectOptionData可以从接口获取
+  // 处理下拉框：selectOptionData可以从接口获取
   let selectOptionData = ["选项A", "选项B", "选项C", "选项D"];
   selectHandle($(".select-container"), selectOptionData);
+
+  // 监听页面大小变化事件
+  window.onresize = function () {
+    setHeight();
+  };
+
+  // 监听pc端键盘输入事件
+  let isMobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i);
+  if (!isMobile) {
+    window.addEventListener("keydown", (e) => {
+      // 字母键的keyCode值在65到90之间
+      if (e.keyCode >= 65 && e.keyCode <= 90) {
+        console.log(e.key);
+      }
+    });
+  }
+
+  //
 };
 
 // 辅助函数
@@ -23,6 +42,13 @@ function handleClass(el) {
 }
 
 // 功能函数
+
+// 页面大小发生变化时
+function setHeight() {
+  // 例如 $('.content').style.height = (window.innerHeight - $('.main .header').offsetHeight) + 'px';
+}
+
+// 下拉框
 function selectHandle(selectContainer, optData) {
   // 该下拉框默认为块级元素，可以通过设置display让下拉框变成行内块元素
   // selectContainer.style.display = 'inline-block';
@@ -75,3 +101,53 @@ function selectHandle(selectContainer, optData) {
     };
   });
 }
+
+// toggle按钮：通常用来控制显示隐藏导航栏，特别是移动端适配情况下默认隐藏导航栏
+$(".toggle").addEventListener(
+  "click",
+  () => {
+    $(".toggle").classList.toggle("toggle-active");
+  },
+  false
+);
+
+// api组件
+$(".register-button").onclick = function () {
+  // 弹窗message
+  $message.info("欢迎使用消息弹窗!");
+
+  // 对话框modal
+  ewConfirm({
+    title: "注册用户",
+    content: `
+            <p>向我们注册以获得更多信息，更多支持等</p>
+            <form class="modal-form">
+                <div>
+                    <label>姓名:</label>
+                    <input type="text" placeholder="请输入姓名">
+                </div>
+                <div>
+                    <label>邮箱:</label>
+                    <input type="email" placeholder="请输入邮箱">
+                </div>
+                <div>
+                    <label>密码:</label>
+                    <input type="password" placeholder="请输入密码">
+                </div>
+                <div>
+                    <label>确认密码:</label>
+                    <input type="password" placeholder="请输入密码">
+                </div>
+            </form>
+        `,
+    showCancel: true,
+    sureText: "注册",
+    cancelText: "取消注册",
+    footerAlign: "center",
+    isClickModal: false,
+    sure: (context) => {
+      context.close(1000);
+      // 还可以写更加复杂的逻辑实现更多功能
+    },
+  });
+};

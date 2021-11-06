@@ -14,7 +14,7 @@ git push -u origin master
 
 ## 参考目录
 0. 前端面试题问答（HTML\CSS\JS\VUE\REACT\算法\HTTP\）
-1. exchangeRate汇率转换器（数据驱动渲染下列框列表、）
+1. 
 2. 
 3. 
 4. expandCard扩展卡片(选中与未选中的状态切换、随机图片、事件委托)
@@ -28,7 +28,7 @@ git push -u origin master
 - z1-toolSet工具集（骰子、金额大写转换、）
 - z2-todoList代办事项（列表枚举、优先级排序、移动端适配）
 - z3-reader订阅器（动机导向、推荐算法、）
-- z4-diyForm（移动端适配、自制下拉框、进度条、自定义函数链式调用、过渡与转换实现动效、CSS自定义变量、HTML自定义属性、DOM操作增删class并更新视图、弹窗API组件、）
+- z4-diyForm（移动端适配、自制下拉框、进度条、自定义函数链式调用、过渡与转换实现动效、CSS自定义变量、HTML自定义属性、DOM操作增删class并更新视图、弹窗API组件、字符表情）
 
 ## 待定
 - AI拟声：https://github.com/babysor/MockingBird
