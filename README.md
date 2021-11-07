@@ -14,7 +14,7 @@ git push -u origin master
 
 ## 参考目录
 0. 前端面试题问答（HTML\CSS\JS\VUE\REACT\算法\HTTP\）
-1. 
+1. music音乐播放器（fa图标、）
 2. 
 3. 
 4. expandCard扩展卡片(选中与未选中的状态切换、随机图片、事件委托)
@@ -29,6 +29,7 @@ git push -u origin master
 - z2-todoList代办事项（列表枚举、优先级排序、移动端适配）
 - z3-reader订阅器（动机导向、推荐算法、）
 - z4-diyForm（移动端适配、自制下拉框、进度条、自定义函数链式调用、过渡与转换实现动效、CSS自定义变量、HTML自定义属性、DOM操作增删class并更新视图、弹窗API组件、字符表情）
+- z5-musicPlayer(参考1-music的进度条等功能、移动端适配、听音乐、看mv、调用第三方API、支持上传、支持搜索、支持收藏、支持创建歌单、支持智能推荐；支持弹钢琴、创造音乐、初音)
 
 ## 待定
 - AI拟声：https://github.com/babysor/MockingBird
