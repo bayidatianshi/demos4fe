@@ -61,7 +61,7 @@ const scoreEl = $("#score");
 const wordEl = $("#word");
 
 let score = 0;
-let time = 10;
+let time = 10000;
 let timer = null;
 
 let randomWord;
