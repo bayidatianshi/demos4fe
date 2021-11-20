@@ -21,7 +21,18 @@ https://juejin.cn/post/6844903879973273607
 - 首屏加载优化（https://blog.csdn.net/weixin_34414196/article/details/91480981）
 - canvas和svg（https://www.zhihu.com/question/19690014）
 - 如何避免回流和重绘 
+- HTML5页面的离线储存(https://juejin.cn/post/6905294475539513352#heading-17)
+- 网页乱码（https://juejin.cn/post/6905294475539513352#heading-25）
 # CSS
+
+## 1px问题
+https://juejin.cn/post/6905539198107942919#heading-58
+
+## 什么是物理像素，逻辑像素和像素密度，为什么在移动端开发时需要用到@3x, @2x这种图片？
+- https://juejin.cn/post/6905539198107942919#heading-19
+
+## 单行、多行文本溢出隐藏
+- https://juejin.cn/post/6905539198107942919#heading-26
 
 ## 选择器与优先级
 ```
@@ -48,6 +59,7 @@ animation动画
 
 ### CSS画圆半圆扇形三角梯形
 ```css
+/* 圆形 */
 div{
     margin: 50px;
     width: 100px;
@@ -62,17 +74,21 @@ div{
     height: 50px;
     border-radius: 50px 50px 0 0;
 }
-/* 扇形 */
-.sector{
-    border-radius: 100px 0 0;
-}
-/* 三角 */
+/* 三角：实际上边框并不是四个方向的矩形，而是四个方向的三角形。设置某一边有颜色，其他边transparent透明后，可以看到 */
 .triangle{
     width: 0px;
     height: 0px;
     background: none;
-    border: 50px solid red;
+    border: 50px solid;
     border-color: red transparent transparent transparent;
+}
+/* 扇形：三角加圆角边框 */
+.sector{
+    width: 0;
+    height: 0;
+    border: 100px solid transparent;
+    border-radius: 100px;
+    border-top-color: red;
 }
 /* 梯形 */
 .ladder{
@@ -536,6 +552,8 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 
 
 # JS
+
+## web worker
 
 ## 如何规避javascript多人开发函数重名问题
 
