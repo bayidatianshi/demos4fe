@@ -1,0 +1,31 @@
+// reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+img {
+  vertical-align: top;
+}
+button{
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: grey;
+  transform: scale(1.0);
+  transition: transform .2s ease 0s;
+}
+button:hover {
+  transform: scale(1.1);
+}
+input {
+  outline: none;
+}

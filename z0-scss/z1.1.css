@@ -1,0 +1,231 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+button {
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: grey;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: -webkit-transform .2s ease 0s;
+  transition: -webkit-transform .2s ease 0s;
+  transition: transform .2s ease 0s;
+  transition: transform .2s ease 0s, -webkit-transform .2s ease 0s;
+}
+
+button:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+input {
+  outline: none;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+  height: 400px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  padding: 20px;
+}
+
+.card::before {
+  display: block;
+  content: attr(data-title);
+  color: skyblue;
+  font-weight: bolder;
+  font-size: 20px;
+  position: absolute;
+  top: -26px;
+  left: 0px;
+}
+
+.card + .card {
+  margin-top: 30px;
+}
+
+.expand-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px 0 0 20px;
+}
+
+.expand-card .item:nth-child(1) {
+  background-image: url("https://avatars1.githubusercontent.com/u/44018010");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.expand-card .item:nth-child(2) {
+  background-image: url("https://avatars1.githubusercontent.com/u/4401808");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.expand-card .item:nth-child(3) {
+  background-image: url("https://avatars1.githubusercontent.com/u/4401807");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.expand-card .item:nth-child(4) {
+  background-image: url("https://avatars1.githubusercontent.com/u/4401809");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.expand-card .item:nth-child(5) {
+  background-image: url("https://avatars1.githubusercontent.com/u/4401808");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.expand-card .item {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0 20px 20px 0;
+  background-clip: content-box;
+  -webkit-transition: -webkit-box-flex 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+  transition: -webkit-box-flex 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+  transition: flex 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+  transition: flex 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s, -webkit-box-flex 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s, -ms-flex 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+}
+
+.expand-card .item:hover {
+  -webkit-box-flex: 5;
+      -ms-flex: 5;
+          flex: 5;
+}
+
+.progress {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.progress .nums, .progress .btns {
+  width: 500px;
+  text-align: center;
+}
+
+.progress .nums {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  position: relative;
+}
+
+.progress .nums .num {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 50%;
+  border: 5px solid #ddd;
+  background-color: white;
+  z-index: 999;
+  -webkit-transition: border .5s linear 0s;
+  transition: border .5s linear 0s;
+}
+
+.progress .nums .num:nth-child(1) {
+  border: 5px solid skyblue;
+}
+
+.progress .lines {
+  width: 500px;
+  height: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.progress .lines .down-line, .progress .lines .up-line {
+  position: absolute;
+  height: 5px;
+}
+
+.progress .lines .down-line {
+  width: 500px;
+  background-color: #ddd;
+  z-index: 1;
+}
+
+.progress .lines .up-line {
+  width: 0px;
+  background-color: skyblue;
+  z-index: 2;
+  -webkit-transition: width .5s linear 0s;
+  transition: width .5s linear 0s;
+}
+
+.progress .btns {
+  position: absolute;
+  bottom: 40px;
+}
+
+.progress .btns .next {
+  margin-left: 20px;
+}
+
+.progress .btns .active {
+  color: white;
+  background-color: skyblue;
+}
+/*# sourceMappingURL=z1.1.css.map */

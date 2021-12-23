@@ -1,0 +1,126 @@
+// 文件引入，把私有文件开头的_去掉也可以
+@import './_variables';
+@import './mixins';
+@import './reset';
+
+// layout
+body {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+// 卡片
+.card {
+  height: 400px;
+  @include border-radius();
+  box-shadow: 0 0 4px rgba($color: #000000, $alpha: 0.2);
+  position: relative;
+  padding: 20px;
+  // 卡片标题
+  &::before {
+    display: block;
+    content: attr(data-title); // content属性可以接收内联的data属性
+    color: skyblue;
+    font-weight: bolder;
+    font-size: 20px;
+    position: absolute;
+    top: -26px;
+    left: 0px;
+  }
+}
+.card + .card {
+  margin-top: 30px;
+}
+
+// expandCard
+.expand-card {
+  display: flex;
+  padding: 20px 0 0 20px;
+  // 利用循环给每个item添加随机背景图
+  @for $index from 1 through 5 {
+    .item:nth-child(#{$index}) {
+      @include random-bg-img();
+    }
+  }
+  .item {
+    flex: 1;
+    padding: 0 20px 20px 0;
+    // 背景裁剪
+    background-clip: content-box;
+    transition: flex .5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+    &:hover {
+      flex: 5;
+    }
+  }
+}
+
+// progress
+.progress {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .nums, .btns {
+    width: 500px;
+    text-align: center;
+  }
+  .nums {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    // 步骤⭕️
+    .num {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 30px;
+      border-radius: 50%;
+      border: 5px solid #ddd;
+      background-color: white;
+      z-index: 999;
+      transition: border .5s linear 0s;
+    }
+    .num:nth-child(1) {
+      border: 5px solid skyblue;
+    }
+  }
+  // 灰色进度条
+  .lines {
+    width: 500px;
+    height: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .down-line, .up-line {
+      position: absolute;
+      height: 5px;
+    }
+    // 下方进度条
+    .down-line {
+      width: 500px;
+      background-color: #ddd;
+      z-index: 1;
+    }
+    // 上方进度条
+    .up-line {
+      width: 0px;
+      background-color: skyblue;
+      z-index: 2;
+      transition: width .5s linear 0s;
+    }
+  }
+  // 按钮
+  .btns {
+    position: absolute;
+    bottom: 40px;
+    .next {
+      margin-left: 20px;
+    }
+    .active {
+      color: white;
+      background-color: skyblue;
+    }
+  }
+}

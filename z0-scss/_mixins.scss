@@ -1,0 +1,32 @@
+// mixin功能类似于函数，可以接受传参，将实现特定功能的css写在一处，供其他元素调用
+@mixin singleline-ellisis($width) {
+  width: $width;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+@mixin border-radius($border-width: 1px, $border-style:solid, $border-color: #ddd, $border-radius: 4px) {
+  border: $border-width $border-style $border-color;
+  border-radius: $border-radius;
+}
+@mixin random-bg-img() {
+  // github头像的随机图片
+  background-image: url("https://avatars1.githubusercontent.com/u/440180" + floor(random(10) + 1));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+// 利用mixin可以简化媒体查询的写法
+@mixin ipad($box-num-perline) {
+  @media screen and (min-width: 768px) {
+    flex: 0 0 100% / $box-num-perline;
+    @content;
+  }
+}
+@mixin pc($box-num-perline) {
+  @media screen and (min-width: 1200px) {
+    flex: 0 0 100% / $box-num-perline;
+    @content;
+  }
+}

@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+button {
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+input {
+  outline: none;
+}
+
+.text-div {
+  border: 1px solid skyblue;
+  padding: 20px;
+  font-size: 14px;
+}
+
+.text-div p {
+  color: #222222;
+}
+
+.text-div p:hover {
+  color: #888888;
+}
+
+.text-div .ellipsis-p {
+  width: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.flex-box {
+  margin-top: 20px;
+  padding: 20px 20px 0 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  border: 1px solid pink;
+}
+
+.flex-box .flex-item {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 50%;
+          flex: 0 0 50%;
+  height: 60px;
+  padding: 0 0 20px 20px;
+  background-color: skyblue;
+  background-clip: content-box;
+}
+
+@media screen and (min-width: 768px) {
+  .flex-box .flex-item {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+    background-color: orange;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .flex-box .flex-item {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 16.66667%;
+            flex: 0 0 16.66667%;
+    background-color: yellow;
+  }
+}
+/*# sourceMappingURL=default.css.map */

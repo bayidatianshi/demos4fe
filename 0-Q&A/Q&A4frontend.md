@@ -423,7 +423,7 @@ https://juejin.cn/post/6844903667175260174
 /*      text-align: center;
       line-height: 100px;*/
 
-      /*方法二：子元素分别设置水平居中和垂直居中（先下移父元素高度的一半，再上移自身高度的一半）*/
+      /*方法二：不脱离标准流，子元素分别设置水平居中和垂直居中（先下移父元素高度的一半，再上移自身高度的一半）*/
 /*      margin: 0 auto;
       position: relative;
       top: 50%;
@@ -461,7 +461,10 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 浮动盒区域不叠加到BFC上
 ```
 - 作用：可以BFC内的元素的样式布局符合规范，解决类似字体环绕、自适用两列布局（float + overflow）、清除浮动和外边距塌陷等问题
-- 清除浮动：给浮动元素的父元素设置display: flow-root让父元素成为BFC
+- 清除浮动：
+  - 让浮动元素的父元素成为BFC,例如设置`display: flow-root`
+  - 浮动元素的父元素添加after伪元素清除浮动
+  - 隔墙法：添加一个div清除浮动
 
 ```html
 <!DOCTYPE html>
@@ -469,7 +472,6 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 <head>
   <title>test</title>
   <style type="text/css">
-    /*通过设置clear:both;清除浮动，如果是子元素浮动，则给父元素的伪元素设置；如果是兄弟元素浮动，就在中间加上块级元素然后设置；*/
     .wrapper{
       border: 1px solid red;
       /*让父元素触发BFC也可以清除浮动，例如添加display: flow-root*/
@@ -492,9 +494,9 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
 <body>
 <div class="wrapper">
   <div class="content left"></div>
-  <div style="clear: both"></div>
-  <div class="content"></div>
 </div>
+<div style="clear: both; height: 20px;"></div>
+<div class="content"></div>
 </body>
 </html>
 ```
@@ -512,6 +514,9 @@ BFC就是页面上的一个隔离的独立容器，容器里面的子元素不�
     .out {
       background: grey;
       /*display: flow-root;*/
+
+      /* 还可以通过增加边框解决 */
+      /* border: 1px solid transparent; */
     }
     .in {
       width: 100px;

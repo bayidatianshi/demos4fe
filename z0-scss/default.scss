@@ -1,0 +1,48 @@
+// 文件引入，把私有文件开头的_去掉也可以
+@import './_variables';
+@import './mixins';
+@import './reset';
+
+// 支持嵌套
+.text-div {
+  border: 1px solid skyblue;
+  padding: 20px;
+  // 使用变量
+  font-size: $text-size;
+  p {
+    // 使用内置函数
+    color: darken($theme-color, 20%);
+    // &表示当前元素
+    &:hover {
+      color: lighten($theme-color, 20%);
+    }
+  }
+  .ellipsis-p {
+    // 通过mixin设置该p标签的宽度和单行省略，功能类似函数
+    @include singleline-ellisis(40px);
+  }
+}
+
+.flex-box {
+  margin-top: 20px;
+  padding: 20px 20px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid pink;
+  .flex-item {
+    flex: 0 0 50%;
+    height: 60px;
+    padding: 0 0 20px 20px;
+    background-color: skyblue;
+    // 背景裁剪，让背景色不覆盖padding
+    background-clip: content-box;
+    // 使用mixin简化媒体查询写法，并且语义更强
+    @include ipad(4) {
+      // 里面的内容会被@content接收
+      background-color: orange;
+    }
+    @include pc(6) {
+      background-color: yellow;
+    }
+  }
+}

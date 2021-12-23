@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../z0-scss/z1.1.css" />
+    <style></style>
+    <!-- JQ -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <!-- expandCard -->
+    <div class="card expand-card" data-title="expandCard">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+    <!-- progress -->
+    <div class="card progress" data-title="progress">
+      <div class="nums" data-after-width="0px">
+        <div class="num">0</div>
+        <div class="num">1</div>
+        <div class="num">2</div>
+        <div class="num">3</div>
+        <div class="num">4</div>
+      </div>
+      <div class="lines">
+        <div class="down-line"></div>
+        <div class="up-line"></div>
+      </div>
+      <div class="btns">
+        <button class="last">上一步</button>
+        <button class="next active">下一步</button>
+      </div>
+    </div>
+
+    <script>
+      // expandCard
+
+      // progress
+      {
+        const $last = document.querySelector(".progress .last");
+        const $next = document.querySelector(".progress .next");
+        const $numsArr = document.querySelectorAll(".progress .nums .num");
+        const $up_line = document.querySelector(".progress .lines .up-line");
+        let current = 0;
+        // 节流锁
+        let next_lock_open = true;
+        let last_lock_open = true;
+        // 控制伪元素样式：https://www.jb51.net/article/81984.htm
+        // 下一步
+        $next.onclick = function () {
+          if (!next_lock_open) {
+            return;
+          }
+          switch(current) {
+            case 0: $last.classList.add("active"); break;
+            case 3: $next.classList.remove("active"); break;
+            case 4: return;
+            default: break;
+          }
+          current++;
+          Array.from($numsArr)[current].style.border = "5px solid skyblue";
+          $up_line.style.width = current * 115 + "px";
+
+          next_lock_open = false;
+          setTimeout(function () {
+            next_lock_open = true;
+          }, 500);
+        };
+        // 上一步
+        $last.onclick = function () {
+          if (!last_lock_open) {
+            return;
+          }
+
+          switch(current) {
+            case 0: return;
+            case 1: $last.classList.remove("active"); break;
+            case 4: $next.classList.add("active"); break;
+            default: break;
+          }
+          Array.from($numsArr)[current].style.border = "5px solid #ddd";
+          current--;
+          $up_line.style.width = current * 115 + "px";
+
+          last_lock_open = false;
+          setTimeout(function () {
+            last_lock_open = true;
+          }, 500);
+        };
+      }
+      
+      //
+      {
+        
+      }
+    </script>
+  </body>
+</html>
